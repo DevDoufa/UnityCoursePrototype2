@@ -5,13 +5,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    private float horizontalInput; 
-    public float speed; 
+    private float horizontalInput;
+    public float speed;
     public float xRange;
+
+    public GameObject foodPrefab;
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -28,7 +30,14 @@ public class PlayerController : MonoBehaviour
             transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
         }
 
-        horizontalInput = Input.GetAxis("Horizontal"); //Get the horizontal input
+        //Horizontal Movement
+        horizontalInput = Input.GetAxisRaw("Horizontal"); //Get the horizontal input
         transform.Translate(Vector3.right * horizontalInput * Time.deltaTime * speed); //Move the character
+
+        //Launch Food
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Instantiate(foodPrefab, transform.position, foodPrefab.transform.rotation);
+        }
     }
 }
